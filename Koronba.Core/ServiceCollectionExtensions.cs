@@ -1,5 +1,6 @@
 using Koronba.Core.Persistence.DatabaseContexts;
 using Koronba.Core.Persistence.Repositories;
+using Koronba.Core.Persistence.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Koronba.Core;
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddKoronbaCore(this IServiceCollection collection)
     {
         collection.AddDbContext<KoronbaDbContext>()
+            .AddScoped<IFlashUploadService, FlashUploadService>()
             .AddScoped<IFlashRepository, FlashRepository>()
             .AddScoped<ITagRepository, TagRepository>();
         
