@@ -16,7 +16,13 @@ public class KoronbaDbContext : DbContext
     /// <summary>
     /// The tags db set.
     /// </summary>
-    public DbSet<Tag> Tags { get; set; } 
+    public DbSet<Tag> Tags { get; set; }
+
+    /// <inheritdoc/>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=Koronba.db");
+    }
 
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
