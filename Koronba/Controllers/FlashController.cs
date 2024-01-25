@@ -1,4 +1,5 @@
 using Koronba.Core.Persistence.Repositories;
+using Koronba.Core.Persistence.Stores;
 using Koronba.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +10,18 @@ namespace Koronba.Controllers;
 /// </summary>
 [Route("/flash/{id:int}")]
 public class FlashController(
-    IFlashRepository repo) : Controller
+    IFlashRepository repo,
+    IFlashFileStore store) : Controller
 {
     /// <summary>
     /// The flash entry repository.
     /// </summary>
     private readonly IFlashRepository _repo = repo;
+    
+    /// <summary>
+    /// The flash file store.
+    /// </summary>
+    private readonly IFlashFileStore _store = store;
 
     /// <summary>
     /// Displays the information page for the flash file.
@@ -37,5 +44,29 @@ public class FlashController(
     public IActionResult Watch([FromRoute] int id)
     {
         return Ok("id-id: " + id);
+    }
+
+    /// <summary>
+    /// Gets the specified flash file.
+    /// </summary>
+    /// <param name="id">The id of the flash file.</param>
+    /// <param name="filename">The filename.</param>
+    [Route("get")]
+    public async Task<IActionResult> Get([FromRoute] int id,
+        [FromQuery] string? filename)
+    {
+        var flash = await _repo.FindById(id);
+        if (flash is null)
+            return NotFound();
+
+        var stream = _store.GetStreamFor(flash);
+        if (stream is null)
+            return NotFound();
+
+        const string contentType = "application/x-shockwave-flash";
+        return File(
+            stream, 
+            contentType, 
+            filename ?? $"{id}.swf");
     }
 }
