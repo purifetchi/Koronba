@@ -27,6 +27,7 @@ public class FlashRepository : IFlashRepository
     public async Task<Flash> AddEntry(Flash flash)
     {
         var result = await _db.AddAsync(flash);
+        await _db.SaveChangesAsync();
         return result.Entity;
     }
 
