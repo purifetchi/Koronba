@@ -1,0 +1,16 @@
+@model FlashIndexViewModel
+
+@{
+    ViewData["Title"] = "Index for ";
+}
+
+<div class="text-center">
+    File @Model.Flash.KnownNames.MaxBy(name => name.Seen)?.Name
+    
+    <div>
+        @foreach (var name in Model.Flash.KnownNames)
+        {
+            <b>@(name.Name)</b> @name.Seen
+        }
+    </div>
+</div>
