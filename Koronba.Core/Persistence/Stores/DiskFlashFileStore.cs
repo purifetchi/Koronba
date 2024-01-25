@@ -33,4 +33,14 @@ public class DiskFlashFileStore : IFlashFileStore
             null : 
             new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
     }
+
+    /// <inheritdoc/>
+    public async Task<bool> StoreFile(Flash flash, Stream stream)
+    {
+        var path = Path.Combine(_storePath, $"{flash.Hash}.swf");
+        var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
+        await stream.CopyToAsync(fs);
+        
+        return true;
+    }
 }

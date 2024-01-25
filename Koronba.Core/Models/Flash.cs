@@ -58,4 +58,30 @@ public class Flash
     {
         Tags.Remove(tag);
     }
+
+    /// <summary>
+    /// Adds a filename.
+    /// </summary>
+    /// <param name="filename">The filename.</param>
+    public void AddFilename(string filename)
+    {
+        var maybeName = KnownNames.FirstOrDefault(name => name.Name == filename);
+        if (maybeName is not null)
+        {
+            maybeName.Seen++;
+            return;
+        }
+        
+        KnownNames.Add(new FlashName
+        {
+            Name = filename,
+            Seen = 1
+        });
+    }
+
+    /// <summary>
+    /// Marks this flash file as seen now.
+    /// </summary>
+    public void MarkAsSeenNow() =>
+        LastSeenAt = DateTime.Now;
 }

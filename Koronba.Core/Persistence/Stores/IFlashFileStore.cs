@@ -13,4 +13,12 @@ public interface IFlashFileStore
     /// <param name="flash">The flash entry.</param>
     /// <returns>The resulting stream, if the file exists.</returns>
     Stream? GetStreamFor(Flash flash);
+
+    /// <summary>
+    /// Stores a flash entry.
+    /// </summary>
+    /// <param name="flash">The flash entry.</param>
+    /// <param name="stream">The stream.</param>
+    /// <returns>Whether the storing was successful.</returns>
+    Task<bool> StoreFile(Flash flash, Stream stream);
 }
