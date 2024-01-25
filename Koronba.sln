@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Koronba", "Koronba\Koronba.csproj", "{D2FDEFCD-3640-44EB-ACA2-FBAE58553813}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Koronba.Core", "Koronba.Core\Koronba.Core.csproj", "{92E5352D-11EC-497E-B94A-0ED031872C68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{D2FDEFCD-3640-44EB-ACA2-FBAE58553813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2FDEFCD-3640-44EB-ACA2-FBAE58553813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2FDEFCD-3640-44EB-ACA2-FBAE58553813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92E5352D-11EC-497E-B94A-0ED031872C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92E5352D-11EC-497E-B94A-0ED031872C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92E5352D-11EC-497E-B94A-0ED031872C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92E5352D-11EC-497E-B94A-0ED031872C68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
