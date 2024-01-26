@@ -4,6 +4,18 @@
     ViewData["Title"] = $"Watching #{Model.Flash.Id}";
 }
 
-<div class="container text-center">
-    
+<div id="container" class="container text-center">
+    <a href="/flash/@Model.Flash.Id/get?filename=TODO.swf" download>Download this flash</a>
 </div>
+
+<script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.addEventListener("load", (event) => {
+        const ruffle = window.RufflePlayer.newest();
+        const player = ruffle.createPlayer();
+        const container = document.getElementById("container");
+        container.appendChild(player);
+        player.load("/flash/@Model.Flash.Id/get");
+    });
+</script>
+<script src="~/lib/ruffle/ruffle.js"></script>
