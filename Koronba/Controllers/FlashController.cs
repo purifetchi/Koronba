@@ -41,9 +41,13 @@ public class FlashController(
     /// </summary>
     /// <param name="id">The id of the flash file.</param>
     [Route("watch")]
-    public IActionResult Watch([FromRoute] int id)
+    public async Task<IActionResult> Watch([FromRoute] int id)
     {
-        return Ok("id-id: " + id);
+        var flash = await _repo.FindById(id);
+        if (flash is null)
+            return NotFound("doesnt exist");
+
+        return View(new FlashIndexViewModel(flash));
     }
 
     /// <summary>
