@@ -1,4 +1,5 @@
 using Koronba.Core;
+using Koronba.External;
 using Koronba.Core.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.Configure<KoronbaCoreConfiguration>(
 
 builder.Services
     .AddKoronbaCore()
+    .AddKoronbaExternal()
     .AddControllersWithViews();
 
 var app = builder.Build();
