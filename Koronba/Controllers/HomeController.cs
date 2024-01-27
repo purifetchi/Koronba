@@ -1,26 +1,35 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Koronba.Models;
+using Koronba.Core.Persistence.Repositories;
 
 namespace Koronba.Controllers;
 
-public class HomeController : Controller
+/// <summary>
+/// The controller for the root route.
+/// </summary>
+/// <param name="repo">The flash repository.</param>
+public class HomeController(IFlashRepository repo)
+    : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    /// <summary>
+    /// The amount of entries for index.
+    /// </summary>
+    private const int MAX_ENTRIES_FOR_INDEX = 5;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    /// <summary>
+    /// The flash repository.
+    /// </summary>
+    private readonly IFlashRepository _repo = repo;
 
-    public IActionResult Index()
+    /// <summary>
+    /// The "/" route.
+    /// </summary>
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        var newest = await _repo.GetNewest(MAX_ENTRIES_FOR_INDEX);
+        var latest = await _repo.GetLastSeen(MAX_ENTRIES_FOR_INDEX);
+        return View(new IndexViewModel(latest, newest));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -7,21 +7,17 @@ namespace Koronba.Core.Persistence.Repositories;
 /// <summary>
 /// The flash entry repository.
 /// </summary>
-public class FlashRepository : IFlashRepository
+/// <remarks>
+/// Constructs a new flash entry repository.
+/// </remarks>
+/// <param name="db">The database context.</param>
+public class FlashRepository(KoronbaDbContext db) 
+    : IFlashRepository
 {
     /// <summary>
     /// The db context.
     /// </summary>
-    private readonly KoronbaDbContext _db;
-
-    /// <summary>
-    /// Constructs a new flash entry repository.
-    /// </summary>
-    /// <param name="db">The database context.</param>
-    public FlashRepository(KoronbaDbContext db)
-    {
-        _db = db;
-    }
+    private readonly KoronbaDbContext _db = db;
 
     /// <inheritdoc/>
     public async Task<Flash> AddEntry(Flash flash)
@@ -29,6 +25,13 @@ public class FlashRepository : IFlashRepository
         var result = await _db.AddAsync(flash);
         await _db.SaveChangesAsync();
         return result.Entity;
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool> Update(Flash flash)
+    {
+        _db.Update(flash);
+        return await _db.SaveChangesAsync() == 1;
     }
 
     /// <inheritdoc/>
@@ -57,6 +60,28 @@ public class FlashRepository : IFlashRepository
         var result = await _db.Flashes
             .Where(f => f.KnownNames
                 .Any(n => n.Name.Contains(name)))
+            .ToListAsync();
+
+        return result;
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<Flash>> GetLastSeen(int count)
+    {
+        var result = await _db.Flashes
+            .OrderByDescending(f => f.LastSeenAt)
+            .Take(count)
+            .ToListAsync();
+
+        return result;
+    }
+
+    /// <inheritdoc/>
+    public async Task<List<Flash>> GetNewest(int count)
+    {
+        var result = await _db.Flashes
+            .OrderByDescending(f => f.CreatedAt)
+            .Take(count)
             .ToListAsync();
 
         return result;

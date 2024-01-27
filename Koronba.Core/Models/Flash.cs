@@ -84,4 +84,13 @@ public class Flash
     /// </summary>
     public void MarkAsSeenNow() =>
         LastSeenAt = DateTime.Now;
+
+    /// <summary>
+    /// Gets the most common name for this flash entry.
+    /// </summary>
+    /// <returns>The most common name.</returns>
+    public string GetMostCommonName() =>
+        KnownNames.OrderByDescending(n => n.Seen)
+            .FirstOrDefault()?
+            .Name ?? $"{Id}.swf";
 }

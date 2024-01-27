@@ -36,6 +36,8 @@ public class FlashUploadService(
         {
             flash.AddFilename(uploadDto.Filename);
             flash.MarkAsSeenNow();
+            await _repo.Update(flash);
+
             return flash;
         }
 

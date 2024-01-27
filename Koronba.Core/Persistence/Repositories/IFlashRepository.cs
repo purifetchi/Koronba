@@ -15,6 +15,13 @@ public interface IFlashRepository
     Task<Flash> AddEntry(Flash flash);
 
     /// <summary>
+    /// Updates a flash entry.
+    /// </summary>
+    /// <param name="flash">The flash entry.</param>
+    /// <returns>Whether the update has been successful.</returns>
+    Task<bool> Update(Flash flash);
+
+    /// <summary>
     /// Finds a flash entry by its id.
     /// </summary>
     /// <param name="id">The id.</param>
@@ -34,4 +41,18 @@ public interface IFlashRepository
     /// <param name="name">The name.</param>
     /// <returns>The enumerable of the result set.</returns>
     Task<List<Flash>> FindAllContainingName(string name);
+
+    /// <summary>
+    /// Gets the last <paramref name="count"/> last seen flash entries.
+    /// </summary>
+    /// <param name="count">The amount of last seen entries to fetch.</param>
+    /// <returns>The list containing the entries.</returns>
+    Task<List<Flash>> GetLastSeen(int count);
+
+    /// <summary>
+    /// Gets the last <paramref name="count"/> newest flash entries.
+    /// </summary>
+    /// <param name="count">The amount of newest entries to fetch.</param>
+    /// <returns>The list containing the entries.</returns>
+    Task<List<Flash>> GetNewest(int count);
 }
