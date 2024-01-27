@@ -1,4 +1,6 @@
 using System.Security.Cryptography;
+using Hangfire;
+using Koronba.Core.Jobs;
 using Koronba.Core.Models;
 using Koronba.Core.Models.Dtos;
 using Koronba.Core.Persistence.Repositories;
@@ -61,6 +63,9 @@ public class FlashUploadService(
             return null;
         
         await _repo.AddEntry(flash);
+
+        BackgroundJob.Enqueue<ThumbnailGenerationJob>(t => t.Generate(flash));
+
         return flash;
     }
     

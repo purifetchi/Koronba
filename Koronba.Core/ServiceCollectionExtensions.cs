@@ -3,6 +3,7 @@ using Koronba.Core.Persistence.Repositories;
 using Koronba.Core.Persistence.Services;
 using Koronba.Core.Persistence.Stores;
 using Microsoft.Extensions.DependencyInjection;
+using Hangfire;
 
 namespace Koronba.Core;
 

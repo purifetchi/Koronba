@@ -1,6 +1,7 @@
 using Koronba.Core;
 using Koronba.External;
 using Koronba.Core.Configuration;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,14 @@ builder.Services.Configure<KoronbaCoreConfiguration>(
 );
 
 builder.Services
+    .AddHangfire(c => 
+        c.SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseInMemoryStorage());
+
+builder.Services
+    .AddHangfireServer()
     .AddKoronbaCore()
     .AddKoronbaExternal()
     .AddControllersWithViews();
@@ -19,6 +28,10 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+}
+else
+{
+    app.UseHangfireDashboard("/hangfire");
 }
 
 app.UseHttpsRedirection();

@@ -7,6 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.9" />
+      <PackageReference Include="Hangfire.InMemory" Version="0.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Koronba.Core\Koronba.Core.csproj" />
     </ItemGroup>
 
