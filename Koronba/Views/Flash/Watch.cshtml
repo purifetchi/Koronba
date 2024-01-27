@@ -1,11 +1,11 @@
-@model FlashIndexViewModel
+@model FlashWatchViewModel
 
 @{
     ViewData["Title"] = $"Watching #{Model.Flash.Id}";
 }
 
 <div id="container" class="container text-center">
-    <a href="/flash/@Model.Flash.Id/get?filename=TODO.swf" download>Download this flash</a>
+    <a href="/flash/@Model.Flash.Id/get?filename=@Model.Filename" download>Download this flash</a>
 </div>
 
 <script>
