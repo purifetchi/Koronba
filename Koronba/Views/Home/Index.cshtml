@@ -11,6 +11,8 @@
         <div class="card">
             <div class="card-body">
                 #@flash.Id <a href="/flash/@flash.Id">@flash.GetMostCommonName()</a>
+                <div>First seen at: @flash.CreatedAt</div>
+                <div>Last seen at: @flash.LastSeenAt</div>
             </div>
         </div>
     }
@@ -22,6 +24,8 @@
         <div class="card">
             <div class="card-body">
                 #@flash.Id <a href="/flash/@flash.Id">@flash.GetMostCommonName()</a>
+                <div>First seen at: @flash.CreatedAt</div>
+                <div>Last seen at: @flash.LastSeenAt</div>
             </div>
         </div>
     }
