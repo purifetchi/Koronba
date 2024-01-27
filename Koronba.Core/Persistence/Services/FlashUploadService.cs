@@ -26,7 +26,11 @@ public class FlashUploadService(
     /// <inheritdoc/>
     public async Task<Flash?> Upload(FlashUploadDto uploadDto)
     {
-        var hash = await GetHashFor(uploadDto.UploadStream);
+        using var ms = new MemoryStream();
+        await uploadDto.UploadStream.CopyToAsync(ms);
+        ms.Seek(0, SeekOrigin.Begin);
+
+        var hash = await GetHashFor(ms);
         var flash = await _repo.FindByFileHash(hash);
         if (flash is not null)
         {
@@ -49,7 +53,9 @@ public class FlashUploadService(
         flash.AddFilename(uploadDto.Filename);
         flash.MarkAsSeenNow();
 
-        if (!await _store.StoreFile(flash, uploadDto.UploadStream))
+        ms.Seek(0, SeekOrigin.Begin);
+
+        if (!await _store.StoreFile(flash, ms))
             return null;
         
         await _repo.AddEntry(flash);
