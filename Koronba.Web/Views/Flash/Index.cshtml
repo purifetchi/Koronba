@@ -1,0 +1,47 @@
+@model FlashIndexViewModel
+
+@{
+    var mostCommonName = Model.Flash.KnownNames.MaxBy(n => n.Seen)?.Name ?? "unknown.swf";
+    ViewData["Title"] = $"{mostCommonName}";
+}
+
+<div class="container text-center">
+    <div class="row align-items-start">
+        <div class="col">
+            <div>
+                Flash #@Model.Flash.Id
+            </div>
+            <div>
+                Most common filename: <b>@mostCommonName</b>
+            </div>
+            <div>
+                Times it has been spotted: @Model.Flash.KnownNames.Sum(n => n.Seen)
+            </div>
+            <div>
+                First seen at: @Model.Flash.CreatedAt
+            </div>
+            <div>
+                Last seen at: @Model.Flash.LastSeenAt
+            </div>
+        </div>
+        <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Seen Count</th>
+                </tr>
+              </thead>
+              <tbody>
+              @foreach (var name in Model.Flash.KnownNames.OrderByDescending(n => n.Seen))
+              {
+                  <tr>
+                      <td><a href="/flash/@Model.Flash.Id/watch?filename=@name.Name">@name.Name</a></td>
+                      <th scope="row">@name.Seen</th>
+                  </tr>
+              }
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>

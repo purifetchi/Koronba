@@ -1,0 +1,32 @@
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="container" class="container text-center">
+    <div>Latest @Model.Newest.Count never seen before flash files.</div>
+    @foreach (var flash in @Model.Newest)
+    {
+        <div class="card">
+            <div class="card-body">
+                #@flash.Id <a href="/flash/@flash.Id">@flash.GetMostCommonName()</a>
+                <div>First seen at: @flash.CreatedAt</div>
+                <div>Last seen at: @flash.LastSeenAt</div>
+            </div>
+        </div>
+    }
+    <br />
+
+    <div>Latest @Model.LastSeen.Count spotted before flash files.</div>
+    @foreach (var flash in @Model.LastSeen)
+    {
+        <div class="card">
+            <div class="card-body">
+                #@flash.Id <a href="/flash/@flash.Id">@flash.GetMostCommonName()</a>
+                <div>First seen at: @flash.CreatedAt</div>
+                <div>Last seen at: @flash.LastSeenAt</div>
+            </div>
+        </div>
+    }
+</div>
