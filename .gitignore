@@ -6,6 +6,6 @@ riderModule.iml
 **/.idea/
 **/.DS_Store
 **/Koronba.db*
-Koronba/store/
+Koronba.Web/store/
 .vs/
-Koronba/Koronba.csproj.user
+Koronba.Web/Koronba.csproj.user
