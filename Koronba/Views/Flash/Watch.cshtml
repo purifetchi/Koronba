@@ -5,6 +5,9 @@
 }
 
 <div id="container" class="container text-center">
+    <div id="player-container">
+
+    </div>
     <a href="/flash/@Model.Flash.Id/get?filename=@Model.Filename" download>Download this flash</a>
 </div>
 
@@ -13,7 +16,7 @@
     window.addEventListener("load", (event) => {
         const ruffle = window.RufflePlayer.newest();
         const player = ruffle.createPlayer();
-        const container = document.getElementById("container");
+        const container = document.getElementById("player-container");
         container.appendChild(player);
         player.load("/flash/@Model.Flash.Id/get");
     });
