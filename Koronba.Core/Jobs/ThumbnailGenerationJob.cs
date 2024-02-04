@@ -9,7 +9,8 @@ namespace Koronba.Core.Jobs;
 /// </summary>
 public class ThumbnailGenerationJob(
     IThumbnailGeneratorService thumbnailGenerator,
-    IFlashFileStore store
+    IFlashFileStore store,
+    IThumbnailStore thumbnailStore
     )
 {
     /// <summary>
@@ -21,14 +22,19 @@ public class ThumbnailGenerationJob(
     /// The flash file store.
     /// </summary>
     private readonly IFlashFileStore _store = store;
+
+    /// <summary>
+    /// The thumbnail store.
+    /// </summary>
+    private readonly IThumbnailStore _thumbnailStore = thumbnailStore;
     
     /// <summary>
     /// Generates the thumbnail for a flash entry.
     /// </summary>
     /// <param name="flash">The entry.</param>
-    public async void Generate(Flash flash)
+    public async Task Generate(Flash flash)
     {
-        using var readStream = _store.GetStreamFor(flash);
+        await using var readStream = _store.GetStreamFor(flash);
         if (readStream is null)
             return;
 
@@ -43,12 +49,15 @@ public class ThumbnailGenerationJob(
         Directory.CreateDirectory(tempDir);
 
         // Copy the flash temporarily to the temp dir to generate the thumbnail.
-        using (var fs = new FileStream(flashPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        await using (var fs = new FileStream(flashPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
             await readStream.CopyToAsync(fs);
 
         var thumbPath = await _thumbnailGenerator.GenerateThumbnailFor(flashPath);
         if (string.IsNullOrEmpty(thumbPath))
             return;
+
+        await using (var fs = new FileStream(thumbPath, FileMode.Open, FileAccess.Read, FileShare.None))
+            await _thumbnailStore.StoreThumbnail(flash, fs);
 
         Directory.Delete(tempDir, true);
     }

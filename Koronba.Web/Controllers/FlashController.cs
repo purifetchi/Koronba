@@ -11,7 +11,8 @@ namespace Koronba.Web.Controllers;
 [Route("/flash/{id:int}")]
 public class FlashController(
     IFlashRepository repo,
-    IFlashFileStore store) : Controller
+    IFlashFileStore store,
+    IThumbnailStore thumbStore) : Controller
 {
     /// <summary>
     /// The flash entry repository.
@@ -23,6 +24,11 @@ public class FlashController(
     /// </summary>
     private readonly IFlashFileStore _store = store;
 
+    /// <summary>
+    /// The flash thumbnail store.
+    /// </summary>
+    private readonly IThumbnailStore _thumbStore = thumbStore;
+    
     /// <summary>
     /// Displays the information page for the flash file.
     /// </summary>
@@ -75,5 +81,26 @@ public class FlashController(
             stream, 
             contentType, 
             filename ?? $"{id}.swf");
+    }
+
+    /// <summary>
+    /// Gets the thumbnail for a flash entry.
+    /// </summary>
+    /// <param name="id">The id of the flash entry.</param>
+    [Route("thumbnail")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var flash = await _repo.FindById(id);
+        if (flash is null)
+            return NotFound();
+
+        var stream = _thumbStore.GetThumbnailStreamFor(flash);
+        if (stream is null)
+            return NotFound();
+
+        const string contentType = "image/png";
+        return File(
+            stream, 
+            contentType);
     }
 }

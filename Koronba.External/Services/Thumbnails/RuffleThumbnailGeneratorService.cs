@@ -26,7 +26,8 @@ public class RuffleThumbnailGeneratorService(IOptions<KoronbaExternalConfigurati
             StartInfo =
             {
                 FileName = _rufflePath,
-                Arguments = path
+                Arguments = path,
+                WorkingDirectory = Path.GetDirectoryName(path)
             }
         };
 
@@ -37,7 +38,7 @@ public class RuffleThumbnailGeneratorService(IOptions<KoronbaExternalConfigurati
             return string.Empty;
 
         return Path.Combine(
-            Path.GetDirectoryName(_rufflePath)!, 
+            Path.GetDirectoryName(path)!, 
             Path.GetFileNameWithoutExtension(path) + ".png");
     }
 }

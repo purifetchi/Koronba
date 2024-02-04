@@ -2,11 +2,16 @@ using Koronba.Core;
 using Koronba.External;
 using Koronba.Core.Configuration;
 using Hangfire;
+using Koronba.External.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<KoronbaCoreConfiguration>(
     builder.Configuration.GetSection("KoronbaCoreConfiguration")
+);
+
+builder.Services.Configure<KoronbaExternalConfiguration>(
+    builder.Configuration.GetSection("KoronbaExternalConfiguration")
 );
 
 builder.Services

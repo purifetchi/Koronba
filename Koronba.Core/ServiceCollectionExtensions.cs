@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
     {
         collection.AddDbContext<KoronbaDbContext>()
             .AddScoped<IFlashFileStore, DiskFlashFileStore>()
+            .AddScoped<IThumbnailStore, DiskThumbnailStore>()
             .AddScoped<IFlashUploadService, FlashUploadService>()
             .AddScoped<IFlashRepository, FlashRepository>()
             .AddScoped<ITagRepository, TagRepository>();

@@ -14,4 +14,9 @@ public class KoronbaCoreConfiguration
     /// The path to the flash file store.
     /// </summary>
     public required string FileStorePath { get; init; }
+    
+    /// <summary>
+    /// The path to the thumbnail file store.
+    /// </summary>
+    public required string ThumbnailStorePath { get; init; }
 }
