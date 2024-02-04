@@ -36,6 +36,7 @@ public class UploadController(
         if (result is null)
             return StatusCode(StatusCodes.Status500InternalServerError);
 
-        return Accepted();
+        Response.Headers.Location= $"/flash/{result.Id}";
+        return StatusCode(StatusCodes.Status303SeeOther);
     }
 }
