@@ -36,5 +36,20 @@ public class KoronbaDbContext : DbContext
         modelBuilder.Entity<Flash>()
             .HasMany(f => f.Tags)
             .WithMany(t => t.Flashes);
+        
+        modelBuilder.Entity<Tag>()
+            .HasIndex(t => t.Name)
+            .IsUnique();
+
+        modelBuilder.Entity<Tag>()
+            .HasData(
+                new Tag { Id = Guid.NewGuid(), Name = "Aww" },
+                new Tag { Id = Guid.NewGuid(), Name = "Lol" },
+                new Tag { Id = Guid.NewGuid(), Name = "Wtf" },
+                new Tag { Id = Guid.NewGuid(), Name = "Classic" },
+                new Tag { Id = Guid.NewGuid(), Name = "Cool" },
+                new Tag { Id = Guid.NewGuid(), Name = "Loop" },
+                new Tag { Id = Guid.NewGuid(), Name = "Game" },
+                new Tag { Id = Guid.NewGuid(), Name = "Misc" });
     }
 }

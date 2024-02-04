@@ -3,6 +3,7 @@ using System;
 using Koronba.Core.Persistence.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Koronba.Core.Migrations
 {
     [DbContext(typeof(KoronbaDbContext))]
-    partial class KoronbaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240204182717_Seed Tags")]
+    partial class SeedTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
