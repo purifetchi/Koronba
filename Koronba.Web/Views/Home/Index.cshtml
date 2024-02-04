@@ -6,7 +6,7 @@
 
 <div id="container" class="container text-center">
     <div>Latest @Model.Newest.Count never seen before flash files.</div>
-    <div class="row">
+    <div class="row justify-content-around">
         @foreach (var flash in @Model.Newest)
         {
             <div class="card" style="width: 14rem;">
@@ -22,7 +22,7 @@
     <br />
 
     <div>Latest @Model.LastSeen.Count spotted before flash files.</div>
-    <div class="row">
+    <div class="row justify-content-around">
         @foreach (var flash in @Model.LastSeen)
         {
             <div class="card" style="width: 14rem;">
